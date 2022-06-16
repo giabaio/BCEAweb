@@ -5,17 +5,17 @@ source("utils.R")
 if (exists(".parameters")) {
   parameters <- .parameters
 } else {
-  parameters <- get(".parameters", envir = BCEA:::.bcea_env)  
+  parameters <- get(".parameters", envir = BCEAweb:::.bcea_env)  
 }
 if (exists(".e")) {
   e <- .e
 } else {
-  e <- get(".e", envir = BCEA:::.bcea_env)  
+  e <- get(".e", envir = BCEAweb:::.bcea_env)  
 }
 if (exists(".c")) {
   c <- .c
 } else {
-  c <- get(".c", envir = BCEA:::.bcea_env)  
+  c <- get(".c", envir = BCEAweb:::.bcea_env)  
 }
 
 # Shiny Server

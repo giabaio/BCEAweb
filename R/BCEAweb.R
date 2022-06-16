@@ -32,7 +32,7 @@
 
 BCEAweb <- function(e=NULL,c=NULL,parameters=NULL,...) {
   exArgs=list(...)
-  appDir <- system.file("BCEAweb", package = "BCEA")
+  appDir <- system.file("BCEAweb", package = "BCEAweb")
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `BCEA`.", call. = FALSE)
   }
@@ -41,7 +41,7 @@ BCEAweb <- function(e=NULL,c=NULL,parameters=NULL,...) {
   # This makes the possible inputs available to the webapp!
   # First uses BCEA::CreateInputs to process the simulations for the model parameters
   #  (this means the user can pass a BUGS, JAGS, Stan, or xls object and BCEA will know what to do. Also eliminates need with further dependencies).
-  if(!is.null(parameters)){parameters=CreateInputs(parameters)$mat} 
+  if(!is.null(parameters)){ parameters = BCEA::createInputs(parameters)$mat} 
   if(!is.null(e)){e=as.matrix(e)}
   if(!is.null(c)){c=as.matrix(c)}
 
@@ -68,6 +68,6 @@ launch <- function(e,c,parameters,...) {
   on.exit(.bcea_env$.e <- NULL, add = TRUE)
   on.exit(.bcea_env$.c <- NULL, add = TRUE)
   on.exit(.bcea_env$.parameters <- NULL, add = TRUE)
-  shiny::runApp(system.file("BCEAweb", package = "BCEA"), 
+  shiny::runApp(system.file("BCEAweb", package = "BCEAweb"), 
                 display.mode = "normal", quiet=TRUE, launch.browser=TRUE, ...)
 }
