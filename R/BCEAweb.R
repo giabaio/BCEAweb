@@ -26,7 +26,7 @@
 #' @examples
 #' \donttest{
 #' data(Vaccine)
-#' BCEAweb(e,c,vaccine)
+#' BCEAweb(e,c,vaccine_mat)
 #' }
 #' @export 
 
