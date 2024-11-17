@@ -1,0 +1,11 @@
+Package: BCEAweb
+Title: A Frontend to the BCEA R Package to Visualise Results Using Shiny
+Version: 0.0.0.9000
+Authors@R: 
+    person("Gianluca",, "Baio", "g.baio@ucl.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-4314-2570"))
+Description: A web-frontend for the BCEA package.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1.9000
