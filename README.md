@@ -15,6 +15,7 @@ install.packages(
    repos = c('https://giabaio.r-universe.dev', 'https://cloud.r-project.org')
 )
 ```
+(NB: You can replace the CRAN mirror to any other, e.g. `https://www.stats.bris.ac.uk/R/` --- see [here](https://cran.r-project.org/)).
 
 ## Usage
 Once `BCEAweb` is available, then you can use it to post-process your `BCEA` model,  by launching it using the command
