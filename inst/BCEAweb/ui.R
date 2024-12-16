@@ -1,3 +1,4 @@
+
 shiny::shinyUI(
   {shiny::tagList(
     shiny::tags$head(shiny::tags$link(rel='shortcut icon', href='favicon.ico')),
@@ -35,9 +36,9 @@ shiny::shinyUI(
                                              shiny::tags$br(),
                                              shiny::tags$strong("BCEAweb"),
                                              " provides a web interface to the ",
-                                             shiny::tags$a(href="http://www.cran.r-project.org","R",target='_blank'),
+                                             shiny::tags$a(href="https://www.cran.r-project.org","R",target='_blank'),
                                              " package ",
-                                             shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA","BCEA",target='_blank'),
+                                             shiny::tags$a(href="https://gianluca.statistica.it/software/bcea/","BCEA",target='_blank'),
                                              ", designed to post-process the results of a statistical model and standardise 
                                                             health economic evaluations, as described in the following graph.",
                                              shiny::tags$br(),shiny::tags$br(),
@@ -52,7 +53,7 @@ shiny::shinyUI(
                                                             which combines them to obtain suitable summaries that quantify the incremental population 
                                                             average for clinical benefits (e.g. QALYs) and costs (e.g. &pound;). These are the fundamental
                                                             quantities used to make the decision analysis (orange box). And this is the process that ",
-                                             shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA","BCEA",target='_blank'),
+                                             shiny::tags$a(href="https://gianluca.statistica.it/software/bcea/","BCEA",target='_blank'),
                                              " and ", 
                                              shiny::tags$strong("BCEAweb"), 
                                              " can perform, by producing standardise output to aid in the assessment of the economic 
@@ -71,17 +72,17 @@ shiny::shinyUI(
                                                shiny::tags$li(shiny::HTML(paste0(
                                                  "A spreadsheet, in ",shiny::tags$a(href='https://en.wikipedia.org/wiki/Comma-separated_values','.csv',target='_blank'),
                                                  " format, e.g. a file produced by MS Excel. Download an example ", 
-                                                 shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA/Vaccine_spreadsheet.csv","here",target="_blank"),";"))),
+                                                 shiny::tags$a(href="https://github.com/downloads/andbe/BCEAweb/raw/refs/heads/main/data/vaccine_parameters.csv","here",target="_blank"),";"))),
                                                shiny::tags$li(shiny::HTML(paste0(
                                                  "Files in 'coda' format. These are typically saved as the results of running ",
                                                  shiny::tags$a(href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo","MCMC",target="_blank"), 
-                                                 " software such as ",shiny::tags$a(href="http://www.openbugs.net/w/FrontPage","OpenBUGS",target="_blank"),
+                                                 " software such as ",shiny::tags$a(href="https://mcmc-jags.sourceforge.io/","JAGS",target="_blank"),
                                                  ". Coda produces an 'index' file and one output file for each Markov Chain used in the
                                                                   analysis. Download a .zip file with an example ",
-                                                 shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA/Vaccine_BUGS.zip","here",target="_blank"),"."))),
+                                                 shiny::tags$a(href="https://github.com/downloads/giabaio/BCEA/raw/refs/heads/dev/inst/extdata/vaccine_jags.RData","here",target="_blank"),"."))),
                                                shiny::tags$li(shiny::HTML(paste0(
-                                                 "A R object, available in the current session. This can be a spreadsheet imported in R (e.g. using the ", shiny::tags$code("read.csv"),
-                                                 " function). Or the output of a full Bayesian analysis (e.g. performed using ",shiny::tags$a(href="http://www.openbugs.net/w/FrontPage","OpenBUGS",target="_blank"), 
+                                                 "A R object, available in the current session, passed to the BCEAweb function as an argument. This can be a spreadsheet imported in R (e.g. using the ", shiny::tags$code("read.csv"),
+                                                 " function). Or the output of a full Bayesian analysis (e.g. performed using ",shiny::tags$a(href="https://mcmc-jags.sourceforge.io/","JAGS",target="_blank"),
                                                  "). The resulting data will be pre-processed to eliminate linear dependency across the variables.")))
                                              ),
                                              "The parameters simulations are uploaded at the 'Parameter simulations' tab. Once the simulations 
@@ -101,10 +102,10 @@ shiny::shinyUI(
                                                                            style="display: block; margin-left: auto; margin-right: auto;")),
                                              shiny::tags$br(),
                                              "An example of such a file can be obtained ",
-                                             shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA/PSA_vaccine.csv","here",target="_blank"),
+                                             shiny::tags$a(href="https://github.com/downloads/andbe/BCEAweb/raw/refs/heads/main/data/vaccine_results.csv","here",target="_blank"),
                                              ". These simulations are uploaded in the 'Economic analysis' tab, where the user can specify some options.",
                                              " Clicking the button ",shiny::tags$code("Run the analysis")," in the 'Economic analysis tab' will run ",
-                                             tags$a(href="http://www.statistica.it/gianluca/BCEA","BCEA",target="_blank"),
+                                             tags$a(href="https://gianluca.statistica.it/software/bcea/","BCEA",target="_blank"),
                                              " in the background and create all the relevant economic summaries, including a detailed 
                                                             Probabilistic Sensitivity Analysis. The tab 'Value of information' also automatically computes the 
                                                             Expected Value of Perfect Information and allows the user to run an analysis of the Expected Value of ",
@@ -122,7 +123,7 @@ shiny::shinyUI(
                                              "Copyright: ",
                                              shiny::tags$a(href='mailto: g.baio@ucl.ac.uk','Gianluca Baio'),
                                              ", Polina Hadjipanayiotou, ",
-                                             shiny::tags$a(href='mailto: Andrea.Berardi@parexel.com','Andrea Berardi'),", ",
+                                             shiny::tags$a(href='mailto: and.be.like@gmail.com','Andrea Berardi'),", ",
                                              shiny::tags$a(href='mailto: anna.heath.14@ucl.ac.uk','Anna Heath')
                                            )
                                            )))
@@ -168,20 +169,23 @@ shiny::shinyUI(
                                          shiny::sliderInput('bins',
                                                             "3. Select the number of bins for histogram",
                                                             min=5,max=25,value=15,ticks=FALSE),
+                                         shiny::selectInput("plotEngine_1",
+                                                            "Select the graphics engine to use:",
+                                                            c("base", "ggplot2", "plotly")),
                                          width='4'
                                        )},
                                        
                                        {shiny::mainPanel(
                                          # THIS CODE PREVENTS FROM SHOWING THE ERROR MESSAGES --- THEY WILL STILL SHOW IN THE R TERMINAL, THOUGH
-                                         shiny::tags$style(type="text/css",
-                                                           ".shiny-output-error { visibility: hidden; }",
-                                                           ".shiny-output-error:before { visibility: hidden; }"),
+                                         # shiny::tags$style(type="text/css",
+                                         #                   ".shiny-output-error { visibility: hidden; }",
+                                         #                   ".shiny-output-error:before { visibility: hidden; }"),
                                          
                                          # Plots for R & spreadsheet
                                          {shiny::conditionalPanel(condition="input.from=='Spreadsheet' || input.from=='R'",
                                                                   shiny::tabsetPanel(
                                                                     shiny::tabPanel("1.1. Plot and summary",
-                                                                                    shiny::plotOutput('hist'),#,width="800px", height="800px"),
+                                                                                    shiny::uiOutput('hist'),#,width="800px", height="800px"),
                                                                                     shiny::tableOutput("summary"))
                                                                   )
                                          )},
@@ -217,16 +221,12 @@ shiny::shinyUI(
                       {shiny::tabPanel("2. Economic analysis",shiny::sidebarPanel(
                         shiny::tags$div(
                           shiny::HTML(paste0(
-                            "In this panel, the user can upload the simulation data for the economic output. These are defined in terms of a vector of simulations for the effectiveness variable and a vector of simulations for the cost variable, for each of the interventions being assessed.",
+                            "In this panel, the user can upload the simulation data for the economic output. These are defined as a dataset of alternating columns of effectiveness and cost simulations for each intervention considered.",
                             shiny::tags$br(),shiny::tags$br(),
-                            "The user can also specify the range and default value for the willingness-to-pay parameter, as well as the labels associated with each interventions. Clicking the ",
-                            shiny::tags$code("Run analysis"), " button will run ",shiny::tags$a(href="http://www.statistica.it/gianluca/BCEA","BCEA",target="_blank"),
-                            " in the background to perform the economic analysis.",
-                            shiny::tags$br(),shiny::tags$br()))),
-                        shiny::tags$div(
-                          "In this panel, the user can upload the (e,c) data for the relevant model parameters.",
-                          shiny::tags$br(),shiny::tags$br(),shiny::tags$br()
-                        ),
+                            "The willingness-to-pay threshold and the labels associated with each intervention can be defined. Clicking the ",
+                            shiny::tags$code("Run analysis"), " button will run ",shiny::tags$a(href="https://gianluca.statistica.it/software/bcea/","BCEA",target="_blank"),
+                            " to perform the economic analysis.",
+                            shiny::tags$hr()))),
                         shiny::selectInput("data","1. Import the simulations for (e,c) from:",
                                            choices=c("R","Spreadsheet","BUGS","Model parameters (from Parameter simulations)"),
                                            selected="R"),
@@ -281,8 +281,11 @@ shiny::shinyUI(
                         shiny::p(shiny::h5(shiny::strong("4. Define intervention labels"))),
                         shiny::uiOutput("int_labels"),
                         shiny::uiOutput("sel_ref"),
-                        shiny::tags$br(),
-                        shiny::actionButton("buttonsum","Run the analysis"),width = '4'),
+                        div(shiny::actionButton("buttonsum","Run the analysis"), style = "display:flex;align-items:center;justify-content:center;"),
+                        shiny::selectInput("plotEngine_2",
+                                           "Select the graphics engine to use:",
+                                           c("base", "ggplot2", "plotly")),
+                        width = '4'),
                         shiny::mainPanel(
                           # AB 20180713: not required anymore: moved up 
                           # ## THIS CODE PREVENTS FROM SHOWING THE ERROR MESSAGES --- THEY WILL STILL SHOW IN THE R TERMINAL, THOUGH
@@ -294,25 +297,20 @@ shiny::shinyUI(
                                             shiny::verbatimTextOutput('analysis')
                             ),
                             shiny::tabPanel("2.2. Cost-Effectiveness plane", 
-                                            shiny::fluidRow( shiny::column(8,shiny::plotOutput('cep')),
+                                            shiny::fluidRow( shiny::column(8,shiny::uiOutput('cep')),
                                                              shiny::column(4,shiny::uiOutput("other_CEA"))
                                             )
                             ),
                             shiny::tabPanel("2.3 Expected Incremental Benefit",
-                                            shiny::plotOutput('eib')
+                                            shiny::uiOutput('eib')
                             ),
                             shiny::tabPanel("2.4 Cost-Effectiveness Efficiency Frontier",
                                             shiny::fluidRow(
-                                              shiny::column(7,
-                                                            shiny::mainPanel(shiny::plotOutput('ceef'))
-                                              ),
-                                              shiny::column(10,
-                                                            shiny::br(),shiny::br(),shiny::br(),
+                                                            shiny::mainPanel(shiny::uiOutput('ceef'))
+                                            ),
+                                            shiny::br(),shiny::br(),
+                                            shiny::fluidRow(
                                                             shiny::verbatimTextOutput('analysisc')
-                                              )
-                                              ##### AB check this #####
-                                              #),
-                                              #width='12'
                                             )
                             )
                           )
@@ -345,10 +343,13 @@ shiny::shinyUI(
                                                              shiny::column(5,shiny::uiOutput("wtp_values2")),
                                                              shiny::column(5,shiny::uiOutput("ceac_values"))
                                                            ),
+                                                           shiny::selectInput("plotEngine_3.1",
+                                                                              "Select the graphics engine to use:",
+                                                                              c("base", "ggplot2", "plotly")),
                                                            width = 4
                                                          ),
                                                          shiny::mainPanel(
-                                                           shiny::plotOutput('ceac')
+                                                           shiny::uiOutput('ceac')
                                                          )
                                          ),
                                          shiny::tabPanel("3.2 Multi-comparison CEAC",
@@ -366,10 +367,13 @@ shiny::shinyUI(
                                                              #column(5,uiOutput("wtp_values2")),
                                                              #column(5,uiOutput("ceac_values"))
                                                            ),
+                                                           shiny::selectInput("plotEngine_3.2",
+                                                                              "Select the graphics engine to use:",
+                                                                              c("base", "ggplot2", "plotly")),
                                                            width = 4
                                                          ),
                                                          shiny::mainPanel(
-                                                           shiny::plotOutput('multi_ceac')
+                                                           shiny::uiOutput('multi_ceac')
                                                          )
                                          ),
                                          shiny::tabPanel("3.3 CEAF",
@@ -389,10 +393,13 @@ shiny::shinyUI(
                                                              shiny::column(5,shiny::uiOutput("wtp_values3")),
                                                              shiny::column(5,shiny::uiOutput("ceaf_values"))
                                                            ),
+                                                           shiny::selectInput("plotEngine_3.3",
+                                                                              "Select the graphics engine to use:",
+                                                                              c("base", "ggplot2", "plotly")),
                                                            width = 4
                                                          ),
                                                          shiny::mainPanel(
-                                                           shiny::plotOutput('ceaf')
+                                                           shiny::uiOutput('ceaf')
                                                          )
                                          )
                                        )
@@ -533,13 +540,13 @@ shiny::shinyUI(
                                                                                                    shiny::p(shiny::h5(shiny::strong("b. Mesh controls (smaller values = faster but LESS accurate)")))
                                                                                      ),
                                                                                      shiny::column(3,
-                                                                                                   shiny::sliderInput('cutoff_inla',ticks=F,
+                                                                                                   shiny::sliderInput('cutoff_inla',ticks=FALSE,
                                                                                                                       "Density of points",
                                                                                                                       min=.1,max=.5,value = .3)
                                                                                      ),
                                                                                      shiny::column(3,
                                                                                                    shiny::sliderInput('convex_in',
-                                                                                                                      "Inner boundary",ticks=F,
+                                                                                                                      "Inner boundary",ticks=FALSE,
                                                                                                                       value=0.5,max=0.7,min=0.3,step=.01)
                                                                                      ),
                                                                                      shiny::column(3,
