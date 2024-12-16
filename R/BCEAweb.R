@@ -14,12 +14,13 @@
 #' @param parameters A matrix with the simulations for all the relevant
 #' model parameters. Defaults at NULL, which means the user has to load 
 #' their own values using the web-interface. Columns must be named
-#' @param ... Additional parameters.
+#' @param ... Additional parameters passed to shiny::runApp
 #' 
 #' @author Gianluca Baio
 #' @seealso \code{\link{bcea}}
-#' @import plotly
+#' @import plotly ggplot2 shinythemes
 #' @importFrom shiny runApp
+#' @importFrom BCEA createInputs
 #' @references
 #' Baio, G., Dawid, A. P. (2011). Probabilistic Sensitivity
 #' Analysis in Health Economics. Statistical Methods in Medical Research
@@ -51,7 +52,7 @@ BCEAweb <- function(e = NULL,
   }
   
   if (!exists("cairo", exArgs)) {
-    if (require(Cairo))
+    if (requireNamespace("Cairo"))
       options(shiny.usecairo=TRUE)
   }
   
@@ -79,8 +80,8 @@ BCEAweb <- function(e = NULL,
 #' 
 #' @param e effects
 #' @param c costs
-#' @param parameters 
-#' @param ... 
+#' @param parameters input parameters
+#' @param ... additional arguments passed to shiny::runApp
 #' 
 launch <- function(e, c, parameters,...) {
   

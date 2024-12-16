@@ -19,26 +19,29 @@ own values using the web-interface}
 
 \item{parameters}{A matrix with the simulations for all the relevant
 model parameters. Defaults at NULL, which means the user has to load
-their own values using the web-interface}
+their own values using the web-interface. Columns must be named}
 
-\item{...}{Additional parameters.}
+\item{...}{Additional parameters passed to shiny::runApp}
 }
 \description{
-Launches the web-app
+Launches the web-app.
 }
 \examples{
-\donttest{
+\dontrun{
 data(Vaccine)
-BCEAweb(e,c,vaccine_mat)
+BCEAweb(e, c, vaccine_mat)
+
+data(Smoking)
+colnames(pi) = paste0("p",1:ncol(pi))
+BCEAweb(e, c, pi)
 }
 }
 \references{
 Baio, G., Dawid, A. P. (2011). Probabilistic Sensitivity
-Analysis in Health Economics.  Statistical Methods in Medical Research
+Analysis in Health Economics. Statistical Methods in Medical Research
 doi:10.1177/0962280211419832.
 
-Baio G. (2012). Bayesian Methods in Health Economics. CRC/Chapman Hall,
-London
+Baio G. (2012). Bayesian Methods in Health Economics. CRC/Chapman Hall, London.
 }
 \seealso{
 \code{\link{bcea}}
@@ -46,10 +49,10 @@ London
 \author{
 Gianluca Baio
 }
-\keyword{Expected}
-\keyword{Health}
+\keyword{"Expected}
+\keyword{"Health}
 \keyword{economic}
-\keyword{evaluation,}
-\keyword{information}
+\keyword{evaluation"}
+\keyword{information"}
 \keyword{of}
 \keyword{value}

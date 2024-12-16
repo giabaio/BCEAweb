@@ -1,4 +1,5 @@
 # vaccine_parameters
+rm(list = ls())
 
 library(BCEAweb)
 data(Vaccine)
