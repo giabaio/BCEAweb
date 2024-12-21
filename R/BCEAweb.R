@@ -32,11 +32,11 @@
 #' @examples
 #' \dontrun{
 #' data(Vaccine)
-#' BCEAweb(e, c, vaccine_mat)
+#' BCEAweb(eff, cost, vaccine_mat)
 #' 
 #' data(Smoking)
-#' colnames(pi) = paste0("p",1:ncol(pi))
-#' BCEAweb(e, c, pi)
+#' colnames(pi_post) = paste0("p",1:ncol(pi_post))
+#' BCEAweb(eff, cost, pi_post)
 #' }
 #' @export 
 #' 
