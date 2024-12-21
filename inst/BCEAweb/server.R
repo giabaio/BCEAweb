@@ -712,8 +712,8 @@ function(input, output, session) {
                          multiple = TRUE)
     })
     
-    compute_evppi <- shiny::reactive({
-      input$run_evppi
+    compute_evppi <- shiny::eventReactive(
+      input$run_evppi, {
       shiny::isolate({
         shiny::withProgress({
           if (is.null(inputs())) {return(invisible())}
@@ -1042,9 +1042,9 @@ function(input, output, session) {
           }
           wtp <- as.numeric(input$wtp_grid5)
           info.rank(
-            parameter = rel.pars,
-            input = input_data_ir,
             he = m(),
+            inp = input_data_ir,
+            parameter = rel.pars,
             wtp = wtp,
             cn = 0.8,
             ca = 0.8,
