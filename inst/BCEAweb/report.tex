@@ -1,0 +1,173 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{graphicx} \usepackage{bm}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Auto-generated report from BCEAweb},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Auto-generated report from BCEAweb}
+\author{}
+\date{\vspace{-2.5em}Version: 21 December, 2024}
+
+\begin{document}
+\maketitle
+
+\hypertarget{economic-analysis}{%
+\section{Economic Analysis}\label{economic-analysis}}
+
+This section contains a summary of the economic evaluation.
+
+\hypertarget{cost-effectiveness-analysis}{%
+\subsection{Cost-effectiveness
+analysis}\label{cost-effectiveness-analysis}}
+
+This sub-section presents a summary table reporting basic economic
+results as well as the optimal decision, given the selected
+willingness-to-pay threshold \(k=25000\).
+
+\begin{verbatim}
+  
+  Cost-effectiveness analysis summary 
+  
+  Reference intervention:  Intervention1
+  Comparator intervention(s): Intervention2
+                            : Intervention3
+                            : Intervention4
+  
+  Optimal decision: choose Intervention1 for k < 200
+                           Intervention2 for 200 <= k < 300
+                           Intervention4 for k >= 300
+  
+  
+  Analysis for willingness to pay parameter k = 25000
+  
+                Expected net benefit
+  Intervention1                10263
+  Intervention2                17423
+  Intervention3                22289
+  Intervention4                28182
+  
+                                      EIB  CEAC   ICER
+  Intervention1 vs Intervention2  -7160.3 0.056 158.66
+  Intervention1 vs Intervention3 -12026.5 0.006 195.77
+  Intervention1 vs Intervention4 -17919.7 0.000 198.33
+  
+  Optimal intervention (max expected net benefit) for k = 25000: Intervention4
+             
+  EVPI 1545.1
+\end{verbatim}
+
+\hypertarget{cost-effectiveness-plane}{%
+\subsection{Cost-effectiveness plane}\label{cost-effectiveness-plane}}
+
+The following graph shows the cost-effectiveness plane. This presents
+the joint distribution of the population average benefit and cost
+differential, \((\Delta_e,\Delta_c)\).
+
+Each point in the graph represents a `potential future' in terms of
+expected incremental economic outcomes. The shaded portion of the plane
+is the `\emph{sustainability area}'. The more points lay in the
+sustainability area, the more likely that the reference intervention
+will turn out to be cost-effective, at a given willingness to pay
+threshold, \(k\) (in this case selected at \(k=\) 25000)
+
+\begin{center}\includegraphics{report_files/figure-latex/unnamed-chunk-28-1} \end{center}
+
+\hypertarget{expected-incremental-benefit}{%
+\subsection{Expected Incremental
+Benefit}\label{expected-incremental-benefit}}
+
+The following graph shows the Expected Incremental Benefit (EIB), as a
+function of a grid of values for the willingness to pay \(k\) (in this
+case in the interval 0 - 50000).
+
+The value for \(k\) in correspondence of which the line crosses the
+\(x-\)axis is termed the `\emph{break-even point}' and represents the
+point(s) at which the optimal decision changes. The graph also reports
+the 95\% credible limits around the EIB.
+
+\begin{center}\includegraphics{report_files/figure-latex/unnamed-chunk-33-1} \end{center}
+
+\hypertarget{cost-effectiveness-efficiency-frontier}{%
+\subsection{Cost-effectiveness efficiency
+frontier}\label{cost-effectiveness-efficiency-frontier}}
+
+\begin{verbatim}
+  
+  Cost-effectiveness efficiency frontier summary 
+  
+  Interventions on the efficiency frontier:
+                Effectiveness   Costs Increase slope Increase angle
+  Intervention2       0.28824  45.733         158.66         1.5645
+  Intervention4       0.72252 143.301         224.67         1.5663
+  
+  Interventions not on the efficiency frontier:
+                Effectiveness  Costs     Dominance type
+  Intervention1       0.48486 94.919 Extended dominance
+  Intervention3       0.00000  0.000 Extended dominance
+\end{verbatim}
+
+\begin{center}\includegraphics{report_files/figure-latex/unnamed-chunk-38-1} \end{center}
+
+\end{document}
