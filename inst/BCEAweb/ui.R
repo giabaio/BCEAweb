@@ -137,7 +137,8 @@ shiny::shinyUI(
                                            "In this panel, the user can upload the simulations for the relevant model parameters.",
                                            shiny::tags$br(),shiny::tags$br(),shiny::tags$br()
                                          ),
-                                         shiny::selectInput("from","1. Import parameters simulation data from:",
+                                         shiny::selectInput(inputId = "from",
+                                                            label = "1. Import parameters simulation data from:",
                                                             choices=c("R","Spreadsheet","BUGS"),
                                                             selected="R"),
                                          
@@ -161,8 +162,8 @@ shiny::shinyUI(
                                          ),
                                          
                                          ## Rest of the side bar (common to all cases)
-                                         shiny::selectInput('parameter',
-                                                            "2. Select parameter of interest for checking",
+                                         shiny::selectInput(inputId = 'parameter',
+                                                            label = "2. Select parameter of interest for checking",
                                                             ""),
                                          shiny::tags$br(),
                                          shiny::sliderInput('bins',
@@ -227,19 +228,21 @@ shiny::shinyUI(
                           "In this panel, the user can upload the (e,c) data for the relevant model parameters.",
                           shiny::tags$br(),shiny::tags$br(),shiny::tags$br()
                         ),
-                        shiny::selectInput("data","1. Import the simulations for (e,c) from:",
-                                           choices=c("R","Spreadsheet","BUGS","Model parameters (from Parameter simulations)"),
-                                           selected="R"),
+                        shiny::selectInput(inputId = "data",
+                                           label = "1. Import the simulations for (e,c) from:",
+                                           choices = c("R","Spreadsheet","BUGS","Model parameters (from Parameter simulations)"),
+                                           selected = "R"),
                         
                         # Panel data import from a Spreadsheet
                         shiny::conditionalPanel(condition="input.data=='Spreadsheet'",
                                                 shiny::fileInput('file1', 'Choose .CSV File',
                                                                  accept=c('text/csv', 'text/comma-separated-values,text/plain', c('.csv','.xlsx')))),
                         
-                        # # Panel data import from R
-                        # shiny::conditionalPanel(condition="input.data=='R'",
-                        #                         shiny::fileInput('file2','Choose RDS File',
-                        #                                          accept='.RDS')),
+                        ##TODO: why was this commented out?
+                        # Panel data import from R
+                        shiny::conditionalPanel(condition = "input.data=='R'",
+                                                shiny::fileInput('file2','Choose RDS File',
+                                                                 accept = '.RDS')),
                         
                         # Panel data import from BUGS (full Bayesian MCMC)
                         shiny::conditionalPanel(condition="input.data=='BUGS'",
@@ -298,10 +301,10 @@ shiny::shinyUI(
                                                              shiny::column(4,shiny::uiOutput("other_CEA"))
                                             )
                             ),
-                            shiny::tabPanel("2.3 Expected Incremental Benefit",
+                            shiny::tabPanel("2.3. Expected Incremental Benefit",
                                             shiny::plotOutput('eib')
                             ),
-                            shiny::tabPanel("2.4 Cost-Effectiveness Efficiency Frontier",
+                            shiny::tabPanel("2.4. Cost-Effectiveness Efficiency Frontier",
                                             shiny::fluidRow(
                                               shiny::column(7,
                                                             shiny::mainPanel(shiny::plotOutput('ceef'))
@@ -351,7 +354,7 @@ shiny::shinyUI(
                                                            shiny::plotOutput('ceac')
                                                          )
                                          ),
-                                         shiny::tabPanel("3.2 Multi-comparison CEAC",
+                                         shiny::tabPanel("3.2. Multi-comparison CEAC",
                                                          shiny::sidebarPanel(
                                                            shiny::tags$div(shiny::HTML(paste0(
                                                              "This plot shows the probability that each intervention under assessement is
@@ -372,7 +375,7 @@ shiny::shinyUI(
                                                            shiny::plotOutput('multi_ceac')
                                                          )
                                          ),
-                                         shiny::tabPanel("3.3 CEAF",
+                                         shiny::tabPanel("3.3. CEAF",
                                                          shiny::sidebarPanel(
                                                            shiny::tags$div(
                                                              "This plot shows the cost-effectiveness frontier. For each value of the
@@ -439,7 +442,7 @@ shiny::shinyUI(
                                                              shiny::tags$br(),shiny::tags$br(),
                                                              "Notice that the ranking provided by considering the parameters separately may
                                          be very different to that obtained considering sub-sets of parameters. Thus, it
-                                         is recommended that a full analysis is performed using the tab '4.3 EVPPI'",
+                                         is recommended that a full analysis is performed using the tab '4.3. EVPPI'",
                                                              shiny::tags$br(),shiny::tags$br(),shiny::tags$br()
                                                            ),
                                                            
@@ -633,17 +636,23 @@ shiny::shinyUI(
                                            shiny::tags$strong("Please select the required output and the document format:"),
                                            shiny::tags$br(),shiny::tags$br()
                                          ),
-                                         shiny::checkboxGroupInput('assumption', "Model checking",choices = ("Plots and summaries"), selected = NULL, inline = FALSE),
-                                         shiny::checkboxGroupInput('bcea', "Economic Analysis", choices = c("Cost-effectiveness analysis",
-                                                                                                            "Cost-effectiveness plane",
-                                                                                                            "Expected Incremental Benefit",
-                                                                                                            "Efficiency frontier"),
+                                         shiny::checkboxGroupInput(inputId = 'assumption', "Model checking",
+                                                                   choices = ("Plots and summaries"), selected = NULL, inline = FALSE),
+                                         shiny::checkboxGroupInput('bcea', "Economic Analysis",
+                                                                   choices = c("Cost-effectiveness analysis",
+                                                                               "Cost-effectiveness plane",
+                                                                               "Expected Incremental Benefit",
+                                                                               "Efficiency frontier"),
                                                                    selected = NULL, inline = FALSE),
-                                         shiny::checkboxGroupInput('psa', "PSA & Value of information",choices =  c("CEAC",
-                                                                                                                    "Multi-comparison CEAC",
-                                                                                                                    "CEAF","EVPI","Info-rank","EVPPI"),
+                                         shiny::checkboxGroupInput(inputId = 'psa', "PSA & Value of information",
+                                                                   choices = c("CEAC",
+                                                                               "Multi-comparison CEAC",
+                                                                               "CEAF",
+                                                                               "EVPI",
+                                                                               "Info-rank",
+                                                                               "EVPPI"),
                                                                    selected = NULL, inline = FALSE),
-                                         shiny::radioButtons('format', 'Document format', c('PDF', 'Word'),inline = TRUE),
+                                         shiny::radioButtons('format', 'Document format', c('PDF', 'Word'), inline = TRUE),
                                          shiny::downloadButton('downloadReport', 'Download report'),
                                          shiny::br(),
                                          shiny::p("NB: generating the document can take some time.")

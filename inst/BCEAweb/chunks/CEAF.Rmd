@@ -6,9 +6,9 @@ output:
 ---
 ```{r, echo=FALSE}
 if(input$format=="PDF") {
-    align="center"
+  align="center"
 } else {
-    align="default"
+  align="default"
 }
 ```
 
@@ -16,7 +16,15 @@ if(input$format=="PDF") {
 
 
 ```{r, echo=FALSE, fig.width=4.6, fig.height=4.6,fig.align=align}
-if (n.ints==2) {graph="base"; pos=c(1,1)} else {graph="ggplot2"; pos=TRUE}
+n_ints <- m()$n_comparators
+
+if (n_ints==2) {
+  graph="base"
+  pos=c(1,1)
+} else {
+  graph="ggplot2"
+  pos=TRUE
+}
 ceaf.plot(m.mce,graph=graph)
 cat()
 ```

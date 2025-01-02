@@ -1,7 +1,7 @@
 options(shiny.maxRequestSize=1024*1024^2)
 source("utils.R")
 
-# Checks if the inputs to the launcher functions are defined
+# Check if inputs to the launcher functions are defined
 if (exists(".parameters")) {
   parameters <- .parameters
 } else {
@@ -30,7 +30,7 @@ function(input, output, session) {
     if(!is.null(parameters)){
       shiny::updateSelectInput(session,'parameter',choices=names(parameters))
     }
-    if(input$from=="Spreadsheet"){
+    if(input$from == "Spreadsheet"){
       rm(list=ls())
       shiny::updateSelectInput(session,'parameter',choices="")
       inFile_params <- input$par_sims_csv
@@ -41,9 +41,9 @@ function(input, output, session) {
   })
   
   param <- shiny::reactive({
-    if(input$from=="R") {
+    if(input$from == "R") {
       shiny::updateSelectInput(session,'parameter',choices="")
-      parameters=parameters
+      parameters <- parameters
       shiny::updateSelectInput(session,'parameter',choices=names(parameters))
     }
     if(input$from=="Spreadsheet"){
@@ -204,19 +204,19 @@ function(input, output, session) {
   shiny::observe({
     if(!is.null(e) & !is.null(c)){
       inputs=shiny::reactive({
-        out=cbind(e,c)
+        out <- cbind(e,c)
       })
     }
     if(input$data=="R" & is.null(e) & is.null(c)){
-      inputs=shiny::reactive({
-        out=NULL
+      inputs <- shiny::reactive({
+        out <- NULL
       })
     }
     if(input$data=="Spreadsheet"){
       inputs  <- shiny::reactive({
         inFile1 <- input$file1
         req(input$file1)
-        ws = read.csv(inFile1$datapath,sep = ',', header = TRUE)
+        ws <- read.csv(inFile1$datapath,sep = ',', header = TRUE)
       })
     }
     if (input$data=="Model parameters (from Parameter simulations)") {
@@ -319,7 +319,7 @@ function(input, output, session) {
           c <- as.matrix(inputs()[,1:(n.cols/2)])
           e <- as.matrix(inputs()[,((n.cols/2)+1):n.cols])
         }
-        mm <- bcea(e,c,ref=as.numeric(value2()),interventions=labs(),wtp=wtp)
+        mm <- BCEA::bcea(eff = e, cost = c, ref=as.numeric(value2()), interventions=labs(), wtp=wtp)
       }
     )
     
@@ -395,7 +395,7 @@ function(input, output, session) {
     output$cep <- shiny::renderPlot({
       if(input$data=="Spreadsheet"){shiny::req(input$file1)}
       shiny::req(m(),inputs(),input$value1)
-      if (m()$n.comparators>2) {
+      if (m()$n_comparators > 2) {
         if (input$which_comparison==comparisons()[1]) {
           shiny::withProgress(
             suppressMessages(contour2(m(),wtp = input$value1, graph="gg")),  # uses ggplot2 for multiple treatments
@@ -404,7 +404,7 @@ function(input, output, session) {
         } else {
           shiny::withProgress(
             suppressMessages(contour2(m(),wtp = input$value1,
-                                      comparison=(which(comparisons()==input$which_comparison)-1),graph="gg")),
+                                      comparison=(which(comparisons()==input$which_comparison)-1), graph="gg")),
             value = 1, message = "Creating plot,", detail = "Please wait..."
           )
         }
@@ -421,7 +421,7 @@ function(input, output, session) {
     })
     output$other_CEA <- shiny::renderUI({
       shiny::req(m())
-      if (m()$n.comparisons>1) {
+      if (m()$n_comparisons > 1) {
         shiny::selectInput("which_comparison","Select comparison to plot",
                            choices=comparisons(),selected=comparisons()[1])
       }
@@ -461,9 +461,9 @@ function(input, output, session) {
       )
     })
     
-    #########
-    #PSA tab#
-    #########
+    ###########
+    # PSA tab #
+    ###########
     
     #CEAC for varying WTP values
     output$ceac <- shiny::renderPlot({
@@ -485,7 +485,7 @@ function(input, output, session) {
       wtp <- seq(input$min,input$max,by=input$step)
       if (length(wtp)==1) {return(invisible)}
       shiny::withProgress(
-        mce.plot(mce()),
+        ceac.plot(mce()),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
@@ -525,32 +525,38 @@ function(input, output, session) {
       }
     )
     
-    
-    ##########################
-    #Value of information tab#
-    ##########################
+    ############################
+    # Value of information tab #
+    ############################
     
     #EVPI
     output$evpi <- shiny::renderPlot({
-      if(input$data=="Spreadsheet"){shiny::req(input$file1)}
+      if (input$data=="Spreadsheet"){shiny::req(input$file1)}
       shiny::req(inputs())
+      
       # If the willingness to pay grid is only one number then don't print the plots
       wtp <- seq(input$min,input$max,by=input$step)
+      
       if (length(wtp)==1) {return(invisible)}
+      
       shiny::withProgress(evi.plot(m()), value = 1, message = "Creating plot,", detail = "Please wait...")
     })
     
     output$evppi_pars <- shiny::renderUI({
       shiny::req(inputs())
+      
       if (input$from=="Spreadsheet" || input$from=="R") {names <- nm()}
       if (input$from=="BUGS") {names <- nm2()}
       if (input$run_info_rank==1) {names <- as.character(make_info_rank()$rank[,1])}
-      shiny::selectInput("evppi_parameters","2. Select parameters to compute the EVPPI",
-                         choices=names,selected=NULL,multiple=TRUE)
+      
+      shiny::selectInput(inputId = "evppi_parameters",
+                         label = "2. Select parameters to compute the EVPPI",
+                         choices=names, selected=NULL, multiple=TRUE)
     })
     
     compute_evppi <- shiny::reactive({
       input$run_evppi
+
       shiny::isolate({
         shiny::withProgress({
           if (is.null(inputs())) {return(invisible())}
@@ -572,16 +578,17 @@ function(input, output, session) {
           check2 <- input$which_method=="GP regression"
           check3a <- input$which_method=="GAM regression (up to 5 parameters)"
           check3b <- length(input$evppi_parameters)<6
+        
           if ((check1a & check1b)==TRUE) {
             shiny::updateSelectInput(session,"which_method",selected="GAM regression (up to 5 parameters)")
-            met="GAM"
+            met <- "GAM"
           }
           if ((check3a & check3b)==TRUE) {
-            met="GAM"
+            met <- "GAM"
           }
           # Allows the user to use the standard GP regression
           if (check2==TRUE) {
-            met="GP"
+            met <- "GP"
           }
           if (input$formula_gam=="Full interaction") {
             regr.mod <- paste("te(",paste(input$evppi_parameters,",",sep="",collapse=""),"bs='cr')")
@@ -592,42 +599,56 @@ function(input, output, session) {
           form <- gsub("[",".",regr.mod,fixed=TRUE)
           form <- gsub("]",".",form,fixed=TRUE)
           
-          # This prevents shiny from showing the output of the cat texts from the call to BCEA::evppi
-          quiet(x <- evppi(input$evppi_parameters,input_data,m(),method=met,
-                           residuals=TRUE,N=input$how_many_sims,
-                           # These are the method-specific options
-                           n.sim=input$sim_hyper,
-                           formula=form,
-                           int.ord=c(input$int.ord1,input$int.ord2), #input$formula_inla,
-                           cutoff=(2*0.3-input$cutoff_inla),
-                           convex.outer=-input$convex_out,
-                           convex.inner=-input$convex_in,
-                           h.value = (1-input$h_value)/1000))
+          # prevents shiny from showing the output of the cat texts from the call to BCEA::evppi
+          quiet(x <- BCEA::evppi(
+            he = m(),
+            param_idx = input$evppi_parameters,
+            input = input_data,
+            N = input$how_many_sims,
+            residuals = TRUE,
+            method = met,
+            # method-specific options
+            n_sim = input$sim_hyper,
+            formula = form,
+            int.ord = c(input$int.ord1, input$int.ord2), # input$formula_inla,
+            cutoff = (2*0.3 - input$cutoff_inla),
+            convex.outer = -input$convex_out,
+            convex.inner = -input$convex_in,
+            h.value = (1-input$h_value)/1000))
         },
         value = 1, message = "Running analysis,", detail = "Please wait...")
       })
     })
     
     output$evppi <- shiny::renderPlot({
-      shiny::req(inputs(),input$evppi_parameters)
+      shiny::req(inputs(), input$evppi_parameters)
       # If the willingness to pay grid is only one number then don't print the plots
-      shiny::req(input$min,input$max,input$step)
-      wtp <- seq(input$min,input$max,by=input$step)
+      shiny::req(input$min, input$max, input$step)
+      wtp <- seq(input$min, input$max, by=input$step)
+      
       if (length(wtp)==1) {return(invisible)}
+      
       shiny::req(compute_evppi())
-      plot(compute_evppi())
+      BCEA:::plot.evppi(compute_evppi())
       reset_num_sims()
     })
     
     output$diag_evppi <- shiny::renderPlot({
-      shiny::req(inputs(),input$evppi_parameters,input$which_diag)
+      shiny::req(inputs(), input$evppi_parameters, input$which_diag)
+      
       # If the willingness to pay grid is only one number then don't print the plots
       wtp <- seq(input$min,input$max,by=input$step)
+      
       if (length(wtp)==1) {return(invisible)}
       #        if (input$which_diag!="Mesh") {
-      if (input$which_diag=="Residual plot") {diag_type="residuals"} else {diag_type="qqplot"}
+      
+      if (input$which_diag=="Residual plot") {
+        diag_type <- "residuals"
+      } else {
+        diag_type <- "qqplot"}
+      
       shiny::withProgress(
-        diag.evppi(compute_evppi(), m(), diag=diag_type),
+        BCEA::diag.evppi(compute_evppi(), m(), plot_type=diag_type),
         min=0, max=1, value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
@@ -642,21 +663,23 @@ function(input, output, session) {
         n_sims <- dim(param2())[1]
       }
       n_sims2 <- ifelse(n_sims>1000,1000,n_sims)
-      shiny::numericInput("how_many_sims",
-                          paste0("3. Select the number of PSA runs to be used (max=",n_sims,")"),
-                          value=n_sims2,max=n_sims,step=input$step)
+      
+      shiny::numericInput(inputId = "how_many_sims",
+                          label = paste0("3. Select the number of PSA runs to be used (max=",n_sims,")"),
+                          value=n_sims2, max=n_sims, step=input$step)
     })
     reset_num_sims <- shiny::reactive({
       # Prevents from selecting more PSA runs than there are available
-      if (input$how_many_sims > m()$n.sim) {
-        shiny::updateNumericInput(session,'how_many_sims',value=m()$n.sim)
+      if (input$how_many_sims > m()$n_sim) {
+        shiny::updateNumericInput(session, 'how_many_sims',value=m()$n_sim)
       }
     })
     
     output$option_GP <- shiny::renderUI({
-      shiny::numericInput("sim_hyper","a. Number of PSA runs to estimate the hyperparameters",
+      shiny::numericInput(inputId = "sim_hyper",
+                          label = "a. Number of PSA runs to estimate the hyperparameters",
                           value=500,
-                          min=m()$n.sim/2,max=m()$n.sim)
+                          min=m()$n_sim/2, max=m()$n_sim)
     })
     
     output$wtp_values <- shiny::renderUI({
@@ -728,7 +751,8 @@ function(input, output, session) {
       if (input$run_evppi==0) {return(invisible())}
       shiny::tags$div(
         shiny::tags$h5(shiny::tags$strong("Value of the EVPPI")),
-        format(compute_evppi()$evppi[which(compute_evppi()$k==input$wtp_grid)],digit=6,nsmall=4)
+        format(compute_evppi()$evppi[which(compute_evppi()$k==input$wtp_grid)],
+               digit=6, nsmall=4)
       )
     })
     
@@ -775,7 +799,9 @@ function(input, output, session) {
     })
     
     tab <- shiny::reactive({
-      tab <- data.frame("Willingness to pay"=compute_evppi()$k,"EVPPI"=compute_evppi()$evppi,"EVPI"=compute_evppi()$evi)
+      tab <- data.frame("Willingness to pay"=compute_evppi()$k,
+                        "EVPPI"=compute_evppi()$evppi,
+                        "EVPI"=compute_evppi()$evi)
     })
     output$download_EVPPI_table <- shiny::downloadHandler(
       filename = function() { "evppi_tab.csv" },
@@ -828,17 +854,19 @@ function(input, output, session) {
             input_data_ir <- param2()
             names.par <- colnames(input_data_ir)
           }
-          if(length(input$info_rank_parameters)==1){
-            if(input$info_rank_parameters=="All parameters") {
-              rel.pars <- names.par
-            } else {
-              rel.pars <- input$info_rank_parameters
-            }
+          if ("All parameters" %in% input$info_rank_parameters) {
+            rel.pars <- names.par
           } else {
             rel.pars <- input$info_rank_parameters
           }
           wtp <- as.numeric(input$wtp_grid5)
-          info.rank(parameter=rel.pars,input=input_data_ir,he=m(),wtp=wtp,cn=.8,ca=.8,N=input$how_many_sims_ir)
+          
+          info.rank(he = m(),
+                    inp = createInputs(input_data_ir[, rel.pars]),
+                    wtp = wtp,
+                    cn = 0.8,
+                    ca = 0.8,
+                    N = input$how_many_sims_ir)
         })
       }
     )
@@ -892,32 +920,40 @@ function(input, output, session) {
       }
     )
     
-    ############
-    #Report tab#
-    ############
+    ##############
+    # Report tab #
+    ##############
+    
     {output$downloadReport <- shiny::downloadHandler(
-      filename = function() {
+      filename <- function() {
         paste('BCEAweb-report', sep = '.',
               switch(input$format, PDF = 'pdf', Word = 'docx'
               ))
       },
       
-      content = function(file) {
+      content <- function(file) {
         # Checks if knitr is installed (and if not, asks for it)
         if(!isTRUE(requireNamespace("knitr",quietly=TRUE))) {
           stop("You need to install the R package 'knitr'.Please run in your R terminal:\n install.packages('knitr')")
         }
         knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
+        
         # Checks if rmarkdown is installed (and if not, asks for it)
         if(!isTRUE(requireNamespace("rmarkdown",quietly=TRUE))) {
           stop("You need to install the R package 'rmarkdown'.Please run in your R terminal:\n install.packages('rmarkdown')")
         }
         
         src <- normalizePath('report.Rmd')
-        out <- quiet(rmarkdown::render('report.Rmd',
-                                       switch(input$format,PDF = rmarkdown::pdf_document(), Word = rmarkdown::word_document(),envir=.bcea_env)
-        ))
-        file.copy(out, file)
+        out <- quiet(
+          rmarkdown::render(input = 'report.Rmd',
+                            output_format = switch(
+                              input$format,
+                              PDF = rmarkdown::pdf_document(),
+                              Word = rmarkdown::word_document(),
+                              envir = .bcea_env)
+          ))
+        
+        file.copy(from = out, to = file)
       }
     )}
   })

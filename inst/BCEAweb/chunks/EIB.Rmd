@@ -6,9 +6,9 @@ output:
 ---
 ```{r, echo=FALSE}
 if(input$format=="PDF") {
-    align="center"
+  align="center"
 } else {
-    align="default"
+  align="default"
 }
 ```
 
@@ -20,7 +20,15 @@ The value for $k$ in correspondence of which the line crosses the $x-$axis is te
 
 ```{r, echo=FALSE,fig.width=4.6, fig.height=4.6, fig.align=align}
 #fig.cap="The Expected Incremental Benefit as a function of the willingness-to-pay",
-n.ints <- m()$n.comparators
-if (n.ints==2) {graph="base"; pos=c(1,1)} else {graph="ggplot2"; pos=TRUE}
+n_ints <- m()$n_comparators
+
+if (n_ints==2) {
+  graph="base"
+  pos=c(1,1)
+} else {
+  graph="ggplot2"
+  pos=TRUE
+}
+
 eib.plot(m(),graph=graph,pos=pos)
 ```

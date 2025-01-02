@@ -19,5 +19,12 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports:
+    BCEA,
+    dplyr,
+    knitr,
+    rmarkdown,
+    shiny,
+    voi
 URL: https://egon.stats.ucl.ac.uk/projects/BCEAweb/
 BugReports: https://github.com/n8thangreen/BCEAweb/issues/
