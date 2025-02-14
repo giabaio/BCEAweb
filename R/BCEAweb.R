@@ -44,7 +44,7 @@ BCEAweb <- function(e = NULL,
                     c = NULL,
                     parameters = NULL,...) {
   exArgs <- list(...)
-  appDir <- system.file("BCEAweb", package = "BCEA")
+  appDir <- system.file("BCEAweb", package = "BCEAweb")
   
   if (appDir == "") {
     stop("Could not find example directory. Try re-installing `BCEA`.",
