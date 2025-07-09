@@ -7,13 +7,21 @@
 launch(e, c, parameters, ...)
 }
 \arguments{
-\item{e}{effects}
+\item{e}{A matrix containing the simulations for the effectiveness
+variable (with number of simulation rows and number of interventions
+columns). Defaults at NULL, which means the user has to load their
+own values using the web-interface}
 
-\item{c}{costs}
+\item{c}{A matrix containing the simulations for the cost
+variable (with number of simulation rows and number of interventions
+columns). Defaults at NULL, which means the user has to load their
+own values using the web-interface}
 
-\item{parameters}{}
+\item{parameters}{A matrix with the simulations for all the relevant
+model parameters. Defaults at NULL, which means the user has to load
+their own values using the web-interface}
 
-\item{...}{}
+\item{...}{Additional parameters.}
 }
 \value{
 runApp

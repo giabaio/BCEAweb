@@ -27,9 +27,9 @@ their own values using the web-interface}
 Launches the web-app
 }
 \examples{
-\donttest{
+\dontrun{
 data(Vaccine)
-BCEAweb(e,c,vaccine_mat)
+BCEAweb(eff,cost,vaccine_mat)
 }
 }
 \references{
@@ -41,7 +41,7 @@ Baio G. (2012). Bayesian Methods in Health Economics. CRC/Chapman Hall,
 London
 }
 \seealso{
-\href{BCEA::bcea}{\code{bcea}}
+\href{https://gianluca.statistica.it/software/bcea/}{\code{bcea}}
 }
 \author{
 Gianluca Baio
