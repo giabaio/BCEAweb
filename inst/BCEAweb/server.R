@@ -398,19 +398,19 @@ function(input, output, session) {
       if (m()$n_comparators > 2) {
         if (input$which_comparison==comparisons()[1]) {
           shiny::withProgress(
-            suppressMessages(contour2(m(),wtp = input$value1, graph="gg")),  # uses ggplot2 for multiple treatments
+            suppressMessages(BCEA::contour2(m(),wtp = input$value1, graph="gg")),  # uses ggplot2 for multiple treatments
             value = 1, message = "Creating plot,", detail = "Please wait..."
           )
         } else {
           shiny::withProgress(
-            suppressMessages(contour2(m(),wtp = input$value1,
+            suppressMessages(BCEA::contour2(m(),wtp = input$value1,
                                       comparison=(which(comparisons()==input$which_comparison)-1), graph="gg")),
             value = 1, message = "Creating plot,", detail = "Please wait..."
           )
         }
       } else {
         shiny::withProgress(
-          (suppressMessages(contour2(m(),wtp = input$value1))),
+          (suppressMessages(BCEA::contour2(m(),wtp = input$value1))),
           value = 1, message = "Creating plot,", detail = "Please wait..."
         )
       }
