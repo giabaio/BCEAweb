@@ -13,6 +13,8 @@
 #' @param parameters A matrix with the simulations for all the relevant
 #' model parameters. Defaults at NULL, which means the user has to load 
 #' their own values using the web-interface
+#' @param launch.browser Defaults to `TRUE`, but can be specified to open inside
+#' Rstudio (e.g. `launch.browser=rstudioapi::viewer`)
 #' @param ... Additional parameters. 
 #' @author Gianluca Baio
 #' @seealso [`bcea`](https://gianluca.statistica.it/software/bcea/)
@@ -32,17 +34,13 @@
 #' }
 #' @export 
 #' 
-BCEAweb <- function(e=NULL, c=NULL, parameters=NULL, ...) {
+BCEAweb <- function(e=NULL, c=NULL, parameters=NULL, launch.browser=TRUE, ...) {
   exArgs <- list(...)
   appDir <- system.file("BCEAweb", package = "BCEAweb")
   
   if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `BCEA`.", call. = FALSE)
+    stop("Could not find example directory. Try re-installing `BCEAweb`.", call. = FALSE)
   }
-  if (exists("launch.browser", exArgs)) {
-    launch.browser <- exArgs$launch.browser
-  } else {
-    launch.browser <- TRUE}
   
   # make the possible inputs available to the webapp!
   # First uses BCEA::CreateInputs to process the simulations for the model parameters
@@ -52,7 +50,7 @@ BCEAweb <- function(e=NULL, c=NULL, parameters=NULL, ...) {
   if (!is.null(c)){c <- as.matrix(c)}
 
   # run webapp
-  invisible(launch(e, c, parameters,...))
+  invisible(launch(e, c, parameters, launch.browser=launch.browser, ...))
 }
 
 
@@ -69,11 +67,13 @@ BCEAweb <- function(e=NULL, c=NULL, parameters=NULL, ...) {
 #' @param parameters A matrix with the simulations for all the relevant
 #' model parameters. Defaults at NULL, which means the user has to load 
 #' their own values using the web-interface
+#' @param launch.browser Defaults to `TRUE`, but can be specified to open inside
+#' Rstudio (e.g. `launch.browser=rstudioapi::viewer`)
 #' @param ... Additional parameters. 
 #'
 #' @returns runApp
 #'
-launch <- function(e, c, parameters, ...) {
+launch <- function(e, c, parameters, launch.browser=TRUE, ...) {
   if(!isTRUE(requireNamespace("shinythemes", quietly=TRUE))) {
     stop("You need to install the R package 'shinythemes'. Please run in your R terminal:\n install.packages('shinythemes')")
   }
@@ -92,5 +92,6 @@ launch <- function(e, c, parameters, ...) {
   shiny::runApp(system.file("BCEAweb", package = "BCEAweb"), 
                 display.mode = "normal",
                 quiet = TRUE,
-                launch.browser = TRUE, ...)
+                launch.browser = launch.browser,
+                ...)
 }

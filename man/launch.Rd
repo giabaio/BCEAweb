@@ -4,7 +4,7 @@
 \alias{launch}
 \title{Internal launch function}
 \usage{
-launch(e, c, parameters, ...)
+launch(e, c, parameters, launch.browser = TRUE, ...)
 }
 \arguments{
 \item{e}{A matrix containing the simulations for the effectiveness
@@ -20,6 +20,9 @@ own values using the web-interface}
 \item{parameters}{A matrix with the simulations for all the relevant
 model parameters. Defaults at NULL, which means the user has to load
 their own values using the web-interface}
+
+\item{launch.browser}{Defaults to \code{TRUE}, but can be specified to open inside
+Rstudio (e.g. \code{launch.browser=rstudioapi::viewer})}
 
 \item{...}{Additional parameters.}
 }
