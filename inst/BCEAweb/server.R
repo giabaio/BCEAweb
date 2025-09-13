@@ -319,7 +319,7 @@ function(input, output, session) {
           c <- as.matrix(inputs()[,1:(n.cols/2)])
           e <- as.matrix(inputs()[,((n.cols/2)+1):n.cols])
         }
-        mm <- BCEA::bcea(eff = e, cost = c, ref=as.numeric(value2()), interventions=labs(), wtp=wtp)
+        mm <- BCEA::bcea(eff = e, cost = c, ref=as.numeric(value2()), interventions=labs(), k=wtp)
       }
     )
     
@@ -435,7 +435,7 @@ function(input, output, session) {
       wtp <- seq(input$min,input$max,by=input$step)
       if (length(wtp)==1) {return(invisible)}
       shiny::withProgress(
-        eib.plot(m()),
+        BCEA::eib.plot(m()),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
       legend("topleft",lty = 2, "95 % CI")
@@ -446,7 +446,7 @@ function(input, output, session) {
       if(input$data=="Spreadsheet"){shiny::req(input$file1)}
       shiny::req(inputs(),m())
       shiny::withProgress(
-        suppressMessages(ceef.plot(m(), print.summary = FALSE, print.plot=TRUE)),
+        suppressMessages(BCEA::ceef.plot(m(), print.summary = FALSE, print.plot=TRUE)),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
@@ -456,7 +456,7 @@ function(input, output, session) {
       if(input$data=="Spreadsheet"){shiny::req(input$file1)}
       shiny::req(inputs(),m())
       shiny::withProgress(
-        suppressMessages(ceef.plot(m(),print.plot=FALSE,print.summary=TRUE)),
+        suppressMessages(BCEA::ceef.plot(m(),print.plot=FALSE,print.summary=TRUE)),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
@@ -473,7 +473,7 @@ function(input, output, session) {
       wtp <- seq(input$min,input$max,by=input$step)
       if (length(wtp)==1) {return(invisible)}
       shiny::withProgress(
-        ceac.plot(m()),
+        BCEA::ceac.plot(m()),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
@@ -485,14 +485,14 @@ function(input, output, session) {
       wtp <- seq(input$min,input$max,by=input$step)
       if (length(wtp)==1) {return(invisible)}
       shiny::withProgress(
-        ceac.plot(mce()),
+        BCEA::ceac.plot(mce()),
         value = 1, message = "Creating plot,", detail = "Please wait..."
       )
     })
     
     #ceaf
     mce <- shiny::reactive({
-      mc <- multi.ce(m())
+      mc <- BCEA::multi.ce(m())
     })
     output$ceaf <- shiny::renderPlot({
       if(input$data=="Spreadsheet"){shiny::req(input$file1)}
@@ -539,7 +539,7 @@ function(input, output, session) {
       
       if (length(wtp)==1) {return(invisible)}
       
-      shiny::withProgress(evi.plot(m()), value = 1, message = "Creating plot,", detail = "Please wait...")
+      shiny::withProgress(BCEA::evi.plot(m()), value = 1, message = "Creating plot,", detail = "Please wait...")
     })
     
     output$evppi_pars <- shiny::renderUI({
@@ -861,7 +861,7 @@ function(input, output, session) {
           }
           wtp <- as.numeric(input$wtp_grid5)
           
-          info.rank(he = m(),
+          BCEA::info.rank(he = m(),
                     inp = createInputs(input_data_ir[, rel.pars]),
                     wtp = wtp,
                     cn = 0.8,
