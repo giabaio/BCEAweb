@@ -501,7 +501,7 @@ function(input, output, session) {
       wtp <- seq(input$min,input$max,by=input$step)
       if (length(wtp)==1) {return(invisible)}
       shiny::withProgress({
-        suppressMessages(ceaf.plot(mce()))},
+        suppressMessages(BCEA::ceaf.plot(mce()))},
         value = 1, message = "Creating plot,", detail = "Please wait...")
     })
     
