@@ -27,7 +27,10 @@ Imports:
     BCEA
 Suggests:
     shiny,
-    shinythemes
+    shinythemes,
+    knitr,
+    rmarkdown,
+    withr
 Depends:
     R (>= 3.5.0)
 URL: https://egon.stats.ucl.ac.uk/projects/BCEAweb/
